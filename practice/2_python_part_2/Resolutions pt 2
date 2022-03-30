@@ -1,0 +1,129 @@
+#task task_classes.py
+
+from datetime import datetime
+
+
+class Homework:
+    def __init__(self, text, deadline):
+        self.text = text
+        self.deadline = datetime.timedelta()
+        self.created = datetime.datetime()
+
+    def is_active(self):
+        if self.created > self.deadline:
+            return False
+        else:
+        return True
+
+
+class Student:
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
+    def do_homeworks(self) :
+        for homework in self.homeworks:
+            if Homework.is_active()==False:
+                print('You are late')
+
+
+class Teacher:
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
+    def create_homework(self) :
+        homework = Homework(homework_text, homework_deadline)
+        
+        
+     # Task task_exceptions.py
+        
+        from typing import Union
+
+
+def division(x: int, y: int) -> Union[None, int]:
+    print("Division finished")
+
+    if y == 0:
+        print("Division by 0")
+        return None
+    elif y == 1:
+        raise Exception(
+            "DivisionByOneException('Deletion on 1 get the same result')"
+        )
+    else:
+        return int(x / y)
+
+
+print("Result:", division(5, 2))
+
+
+#Task task_input_output.py
+
+def read_numbers(n: int) -> str:
+    numbers = []
+
+    users_enters = input("users_enters: ").split(',')
+
+    if len(users_enters) != n:
+        return "No numbers entered"
+
+    for el in users_enters:
+        if el.isdigit():
+            numbers.append(int(el))
+
+    average = sum(numbers) / len(numbers)
+
+    return f"Avg: {average}"
+
+
+print(read_numbers(5))
+
+#task_read_write.py
+file1 = open(file='file_1.txt', mode='r')
+file2 = open(file='file_2.txt', mode='r')
+file3 = open(file='file_3.txt', mode='r')
+
+numbers=[]
+numbers.append(file1.read())
+numbers.append(file2.read())
+numbers.append(file3.read())
+
+file3 = open(file='file_4.txt', mode='w')
+file3.write(','.join(numbers))
+
+
+
+
+#task_read_write2.py
+import string
+import random
+
+
+def generated_words(n=20) -> list:
+    words = []
+    for i in range(n):
+        word = ''.join(
+            random.choices(string.ascii_lowercase, k=random.randint(3, 10))
+        )
+        words.append(word)
+
+    return words
+
+
+filename_utf = 'file_utf_8.txt'
+filename_cp = 'file_cp1252.txt'
+
+file_utf = open(file=filename_utf, mode='w', encoding='utf-8')
+joined_words = '/'.join(generated_words(5))
+file_utf.write(joined_words)
+file_utf.close()
+print(f"{filename_utf} (content:'{joined_words}', encoding: UTF-8")
+
+
+file_cp = open(file=filename_cp, mode='w', encoding='cp1252')
+joined_reverse_words = generated_words(5)[::-1]
+print(joined_reverse_words)
+file_cp.write(','.join(joined_reverse_words))
+file_cp.close()
+print(f"{filename_utf} (content:'{joined_reverse_words}', encoding: CP1252")
