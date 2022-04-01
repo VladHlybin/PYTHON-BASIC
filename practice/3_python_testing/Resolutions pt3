@@ -1,0 +1,154 @@
+#test_task_input_output.py
+import unittest
+
+from gen_words_for_test import generated_words
+
+
+class TestStringMethods(unittest.TestCase):
+
+    def test_list_words(self):
+        words = generated_words()
+        is_word = False
+        for el in words:
+            if el.isalpha():
+                is_word = True
+            else:
+                is_word = False
+
+        self.assertEqual(is_word, True)
+
+
+if __name__ == '__main__':
+    unittest.main()
+    
+
+#test_task_exceptions.py 
+
+    from divides import division
+
+import pytest
+
+
+def test_raise_error():
+    with pytest.raises(Exception) as exc_info:
+        division(1, 1)
+    assert str(exc_info.value) == (
+            "DivisionByOneException('Deletion on 1 get the same result')"
+        )
+
+
+def test_division_zero(capsys):
+    division(1, 0)
+    out, err = capsys.readouterr()
+    assert out == "Division by 0\n"
+
+
+def test_division_correct():
+    assert isinstance(division(1, 5), int) is True
+    
+    
+    
+    
+    import tempfile
+import json
+
+
+def create_or_write_tmp_file(
+        name: str, content: str
+) -> tempfile.TemporaryFile:
+    temp_file = tempfile.TemporaryFile()
+    temp_file.name = name
+    temp_file.write(bytes(content, encoding='utf-8'))
+
+    return temp_file
+
+
+def read_tmp_file(tmp_file: tempfile.TemporaryFile) -> str:
+    tmp_file.seek(0)
+
+    try:
+        number = str(json.loads(tmp_file.read()))
+    except json.decoder.JSONDecodeError:
+        print(f"Error, file content not a number!")
+        return ''
+
+    return number
+
+#test_read_write.py
+
+def save_numbers_to_file():
+    numbers = create_tmp_file()
+
+    tmp_file_last = tempfile.TemporaryFile()
+
+    joined_number = ','.join(numbers) if numbers else ''
+
+    tmp_file_last.write(
+        bytes(joined_number, encoding='utf-8')
+    )
+
+    tmp_file_last.seek(0)
+    print(f"Result file: {tmp_file_last.read()}")
+
+
+def create_tmp_file() -> list:
+    numbers = []
+    amount_files = int(input("Input amount of files - "))
+
+    for i in range(amount_files):
+        file_name = input("Input name of file - ") + ".txt"
+        content = input("Input a number - ")
+
+        tmp_file = create_or_write_tmp_file(file_name, content)
+        print(f"Created file: {tmp_file.name}")
+
+        number = read_tmp_file(tmp_file)
+        tmp_file.close()
+        print(f"File's number: {number}")
+
+        if number:
+            numbers.append(number)
+
+    return numbers
+
+
+if __name__ == '__main__':
+    save_numbers_to_file()
+    
+    #test_read_write_2.py
+    
+    import unittest
+import tempfile
+import json
+
+
+class TestStringMethods(unittest.TestCase):
+    def test_isdigit(self):
+        temp_file_digit = tempfile.TemporaryFile()
+        temp_file_digit.write(bytes('23', encoding='utf-8'))
+
+        temp_file_digit.seek(0)
+
+        try:
+            int_value = json.loads(temp_file_digit.read())
+        except json.decoder.JSONDecodeError:
+            int_value = None
+
+        self.assertIsNotNone(int_value)
+
+    def test_is_not_digit(self):
+        temp_file_digit = tempfile.TemporaryFile()
+        temp_file_digit.write(bytes('test', encoding='utf-8'))
+
+        temp_file_digit.seek(0)
+
+        try:
+            int_value = json.loads(temp_file_digit.read())
+        except json.decoder.JSONDecodeError:
+            int_value = None
+
+        self.assertIsNone(int_value)
+
+
+if __name__ == '__main__':
+    unittest.main()
